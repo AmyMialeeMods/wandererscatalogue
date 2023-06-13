@@ -2,37 +2,38 @@
   "schemaVersion": 1,
   "id": "wandererscatalogue",
   "version": "${version}",
-  "name": "Wanderers Catalogue",
-  "description": "Reliable Trading Services.",
+  "name": "wandererscatalogue",
+  "description": "More Reliable Trading Services.",
   "authors": [
     "AmyMialee"
   ],
   "contact": {
-    "homepage": "https://github.com/AmyMialeeMods/wanderers-catalogue",
-    "issues": "https://github.com/AmyMialeeMods/wanderers-catalogue/issues"
+    "repo": "https://github.com/AmyMialeeMods/wandererscatalogue"
   },
   "license": "All-Rights-Reserved",
   "icon": "assets/wandererscatalogue/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "amymialee.wandererscatalogue.WanderersCatalogueClient"
+      "xyz.amymialee.wandererscatalogue.WanderersCatalogueClient"
     ],
     "main": [
-      "amymialee.wandererscatalogue.WanderersCatalogue"
+      "xyz.amymialee.wandererscatalogue.WanderersCatalogue"
+    ],
+    "cardinal-components-entity": [
+      "xyz.amymialee.wandererscatalogue.WanderersCatalogue"
     ]
   },
   "mixins": [
     "wandererscatalogue.mixins.json"
   ],
+  "custom": {
+    "cardinal-components": [
+      "wandererscatalogue:customer",
+      "wandererscatalogue:seller"
+    ]
+  },
   "depends": {
     "fabric": "*"
-  },
-  "custom": {
-    "modmenu": {
-      "links": {
-        "modmenu.discord": "http://discord.amymialee.xyz/"
-      }
-    }
   }
 }

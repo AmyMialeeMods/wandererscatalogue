@@ -1,7 +1,5 @@
-package amymialee.wandererscatalogue.screens;
+package xyz.amymialee.wandererscatalogue.screens;
 
-import amymialee.wandererscatalogue.WanderersCatalogue;
-import amymialee.wandererscatalogue.util.PlayerOrderWrapper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -10,20 +8,20 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.village.TradeOffer;
+import xyz.amymialee.wandererscatalogue.WanderersCatalogue;
+import xyz.amymialee.wandererscatalogue.cca.CustomerComponent;
 
 import java.util.List;
 
 public class CatalogueScreenHandler extends ScreenHandler {
+    private final PlayerEntity player;
     private final Property selectedRecipe;
-    private final PlayerInventory playerInventory;
 
     public CatalogueScreenHandler(int syncId, PlayerInventory playerInventory) {
         super(WanderersCatalogue.CATALOGUE_SCREEN_HANDLER, syncId);
+        this.player = playerInventory.player;
         this.selectedRecipe = Property.create();
-        this.playerInventory = playerInventory;
-        if (playerInventory.player instanceof PlayerOrderWrapper wrapper) {
-            this.selectedRecipe.set(wrapper.getPlayerOrder());
-        }
+        this.selectedRecipe.set(WanderersCatalogue.CUSTOMER.get(playerInventory.player).getCurrentOrder());
         for (int i = 0; i < 3; ++i) {
             for(int j = 0; j < 9; ++j) {
                 this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
@@ -39,37 +37,36 @@ public class CatalogueScreenHandler extends ScreenHandler {
         return this.selectedRecipe.get();
     }
 
+    @Override
     public boolean canUse(PlayerEntity player) {
         return true;
     }
 
+    @Override
     public boolean onButtonClick(PlayerEntity player, int id) {
-        if (this.isInBounds(id)) {
+        CustomerComponent component = WanderersCatalogue.CUSTOMER.get(player);
+        if (id >= 0 && id < WanderersCatalogue.getAvailableOffers(this.player).size()) {
             this.selectedRecipe.set(id);
-            if (player instanceof PlayerOrderWrapper wrapper) {
-                wrapper.setPlayerOrder(id);
-            }
+            component.setCurrentOrder(id);
         }
         return true;
     }
 
-    private boolean isInBounds(int id) {
-        return id >= 0 && id < getAvailableOfferCount();
+    public List<TradeOffer> getAvailableOffers() {
+        return WanderersCatalogue.getAvailableOffers(this.player);
     }
 
+    public int getAvailableOfferCount() {
+        return WanderersCatalogue.getAvailableOffers(this.player).size();
+    }
+
+    @Override
     public ScreenHandlerType<?> getType() {
         return WanderersCatalogue.CATALOGUE_SCREEN_HANDLER;
     }
 
-    public ItemStack transferSlot(PlayerEntity player, int index) {
+    @Override
+    public ItemStack quickMove(PlayerEntity player, int slot) {
         return ItemStack.EMPTY;
-    }
-
-    public int getAvailableOfferCount() {
-        return getAvailableOffers().size();
-    }
-
-    public List<TradeOffer> getAvailableOffers() {
-        return WanderersCatalogue.getAvailableOffers(this.playerInventory.player);
     }
 }

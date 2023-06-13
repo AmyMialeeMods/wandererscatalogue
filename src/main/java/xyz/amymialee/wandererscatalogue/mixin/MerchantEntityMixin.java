@@ -1,4 +1,4 @@
-package amymialee.wandererscatalogue.mixin;
+package xyz.amymialee.wandererscatalogue.mixin;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.MerchantEntity;
@@ -20,9 +20,6 @@ public abstract class MerchantEntityMixin extends PassiveEntity {
         super(entityType, world);
     }
 
-    @Inject(method = "initDataTracker", at = @At("TAIL"))
-    protected void MerchantEntity$DataTracker(CallbackInfo ci) {}
-
     @Inject(method = "setCustomer", at = @At("HEAD"))
-    public void setCustomer(PlayerEntity customer, CallbackInfo ci) {}
+    public void wanderersCatalogue$setCustomer(PlayerEntity customer, CallbackInfo ci) {}
 }

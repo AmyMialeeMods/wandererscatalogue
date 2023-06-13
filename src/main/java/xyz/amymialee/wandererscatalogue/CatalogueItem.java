@@ -1,6 +1,5 @@
-package amymialee.wandererscatalogue;
+package xyz.amymialee.wandererscatalogue;
 
-import amymialee.wandererscatalogue.screens.CatalogueScreenHandler;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,12 +12,14 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+import xyz.amymialee.wandererscatalogue.screens.CatalogueScreenHandler;
 
 public class CatalogueItem extends Item {
     public CatalogueItem(FabricItemSettings settings) {
         super(settings);
     }
 
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         if (!world.isClient && user instanceof ServerPlayerEntity player) {
