@@ -33,6 +33,7 @@
       "wandererscatalogue:seller"
     ]
   },
+  "accessWidener": "wandererscatalogue.accesswidener",
   "depends": {
     "fabric": "*"
   }

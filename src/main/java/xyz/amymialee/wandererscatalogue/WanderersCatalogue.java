@@ -24,7 +24,6 @@ import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
 import xyz.amymialee.wandererscatalogue.cca.CustomerComponent;
 import xyz.amymialee.wandererscatalogue.cca.SellerComponent;
-import xyz.amymialee.wandererscatalogue.mixin.TradeOfferAccessor;
 import xyz.amymialee.wandererscatalogue.screens.CatalogueScreenHandler;
 
 import java.util.ArrayList;
@@ -67,7 +66,7 @@ public class WanderersCatalogue implements ModInitializer, EntityComponentInitia
             for (TradeOffers.Factory fact : factory) {
                 TradeOffer tradeOffer = fact.create(entity, random);
                 if (tradeOffer != null) {
-                    ((TradeOfferAccessor) tradeOffer).setMaxUses(tradeOffer.getMaxUses() * 4);
+                    tradeOffer.maxUses = tradeOffer.maxUses * 4;
                     offers.add(tradeOffer);
                 }
             }
@@ -77,7 +76,7 @@ public class WanderersCatalogue implements ModInitializer, EntityComponentInitia
             for (TradeOffers.Factory fact : factory2) {
                 TradeOffer tradeOffer = fact.create(entity, random);
                 if (tradeOffer != null) {
-                    ((TradeOfferAccessor) tradeOffer).setMaxUses(tradeOffer.getMaxUses() * 4);
+                    tradeOffer.maxUses = tradeOffer.maxUses * 4;
                     offers.add(tradeOffer);
                 }
             }
